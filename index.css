@@ -15,10 +15,6 @@
     background-color: aliceblue;
 }
 
-.hide {
-    display: none;
-}
-
 .site-header {
     display: flex;
     background-image: url(./assets/worldmap.png);
@@ -97,6 +93,10 @@ fieldset {
 
 legend {
     text-align: center;
+}
+
+.hide {
+    display: none;
 }
 
 @media (max-width: 768px) {
