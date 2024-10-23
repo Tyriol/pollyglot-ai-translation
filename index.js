@@ -15,12 +15,23 @@ startOverButton.addEventListener("click", startOver);
 function submitTranslationData(e) {
   e.preventDefault();
   console.log("Form submitted");
+  const formData = gatherFormData();
   document.querySelector(".translation-input").classList.add("hide");
   document.querySelector(".translation-output").classList.remove("hide");
+  document.querySelector(".original-text-output").innerHTML =
+    formData.textToTranslate;
 }
 
 function startOver() {
   console.log("Start over");
   document.querySelector(".translation-input").classList.remove("hide");
   document.querySelector(".translation-output").classList.add("hide");
+}
+
+function gatherFormData() {
+  const textToTranslate = document.querySelector("#text-to-translate").value;
+  return {
+    textToTranslate,
+  };
+  // const translationLanguage =
 }
