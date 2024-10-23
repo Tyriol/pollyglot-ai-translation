@@ -1,36 +1,3 @@
-import * as OpenAI from "openai";
-// take input values from the form
-// translation
-// language
-// send the data to the open ai api
-// hide input screen and show response screen
-// render response message from open ai api
-// start over button to go back to input screen
-
-const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
-async function main(text, language) {
-  messages = [
-    {
-      role: "system",
-      content:
-        "You are an expert tranlator. You specialise in translating from English to French, Spanish or Japanese",
-    },
-    {
-      role: "user",
-      content: `Please translate this text: ${text} into ${language}`,
-    },
-  ];
-  const chatCompletion = await client.chat.completions.create({
-    model: "gpt-3.5-turbo",
-    messages,
-    warmth: 0.8,
-  });
-  return chatCompletion.choices[0].message.content;
-}
-
 const form = document.querySelector("form");
 const startOverButton = document.querySelector(".start-over");
 
@@ -41,15 +8,31 @@ async function submitTranslationData(e) {
   e.preventDefault();
   console.log("Form submitted");
   const formData = gatherFormData();
-  const translation = await main(
-    formData.textToTranslate,
-    formData.selectedLanguage
-  );
-  document.querySelector(".translation-input").classList.add("hide");
-  document.querySelector(".translation-output").classList.remove("hide");
-  document.querySelector(".original-text-output").innerHTML =
-    formData.textToTranslate;
-  document.querySelector(".translated-text-output").innerHTML = translation;
+
+  try {
+    const response = await fetch("http://localhost:3000/api/translate", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        text: formData.textToTranslate,
+        language: formData.selectedLanguage,
+      }),
+    });
+
+    const data = await response.json();
+    console.log("Data:", data);
+
+    document.querySelector(".translation-input").classList.add("hide");
+    document.querySelector(".translation-output").classList.remove("hide");
+    document.querySelector(".original-text-output").innerHTML =
+      formData.textToTranslate;
+    document.querySelector(".translated-text-output").innerHTML =
+      data.translation;
+  } catch (error) {
+    console.error("Error:", error);
+  }
 }
 
 function startOver() {
