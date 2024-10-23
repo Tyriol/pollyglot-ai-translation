@@ -19,19 +19,32 @@ function submitTranslationData(e) {
   document.querySelector(".translation-input").classList.add("hide");
   document.querySelector(".translation-output").classList.remove("hide");
   document.querySelector(".original-text-output").innerHTML =
-    formData.textToTranslate;
+    formData.textToTranslate + formData.selectedLanguage;
 }
 
 function startOver() {
   console.log("Start over");
+  document.querySelector(".original-text-output").innerHTML = "";
+  document.querySelector("#text-to-translate").value = "";
   document.querySelector(".translation-input").classList.remove("hide");
   document.querySelector(".translation-output").classList.add("hide");
 }
 
+function getLanguageSelection() {
+  const radioOption = document.getElementsByName("languages");
+  for (let i = 0; i < radioOption.length; i++) {
+    if (radioOption[i].checked) {
+      return radioOption[i].value;
+    }
+  }
+}
+
 function gatherFormData() {
   const textToTranslate = document.querySelector("#text-to-translate").value;
+  const selectedLanguage = getLanguageSelection();
   return {
     textToTranslate,
+    selectedLanguage,
   };
   // const translationLanguage =
 }
