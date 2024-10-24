@@ -17,26 +17,27 @@ const openai = new OpenAI({
 
 app.post("/api/translate", async (req, res) => {
   try {
-    const { text, language } = req.body;
+    // const { text, language } = req.body;
 
-    const messages = [
-      {
-        role: "system",
-        content:
-          "You are an expert translator. You specialise in translating from English to French, Spanish or Japanese",
-      },
-      {
-        role: "user",
-        content: `Please translate this text: ${text} into ${language}`,
-      },
-    ];
+    // const messages = [
+    //   {
+    //     role: "system",
+    //     content:
+    //       "You are an expert translator. You specialise in translating from English to French, Spanish or Japanese",
+    //   },
+    //   {
+    //     role: "user",
+    //     content: `Please translate this text: ${text} into ${language}`,
+    //   },
+    // ];
 
-    const chatCompletion = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
-      messages,
-      temperature: 0.8,
-    });
-    res.json({ translation: chatCompletion.choices[0].message.content });
+    // const chatCompletion = await openai.chat.completions.create({
+    //   model: "gpt-3.5-turbo",
+    //   messages,
+    //   temperature: 0.8,
+    // });
+    // res.json({ translation: chatCompletion.choices[0].message.content });
+    res.json({ translation: "Testing mode" });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
