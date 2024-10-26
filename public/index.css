@@ -58,18 +58,14 @@ main {
     padding: 3rem 1rem;
 }
 
-.translation-input {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.translation-input, .translation-output {
     height: 100%;
     border: 0.3rem solid black;
     border-radius: 0.5rem;
     padding: 1.5rem; 
 }
 
-form {
+form, .output-results {
     height: 100%;
     width: 100%;
     display: grid;
