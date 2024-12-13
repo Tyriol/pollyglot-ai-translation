@@ -17,27 +17,29 @@ const openai = new OpenAI({
 
 app.post("/api/translate", async (req, res) => {
   try {
-    // const { text, language } = req.body;
+    const { text, language } = req.body;
 
-    // const messages = [
-    //   {
-    //     role: "system",
-    //     content:
-    //       "You are an expert translator. You specialise in translating from English to French, Spanish or Japanese",
-    //   },
-    //   {
-    //     role: "user",
-    //     content: `Please translate this text: ${text} into ${language}`,
-    //   },
-    // ];
+    const messages = [
+      {
+        role: "system",
+        content:
+          "You are an expert translator. You specialise in translating from English to French, Spanish or Japanese. You provide just the translation, and no other words or commentary. For Japanese, use english readable words, not kanji",
+      },
+      {
+        role: "user",
+        content: `Please translate this text: ${text} into ${language}`,
+      },
+    ];
 
-    // const chatCompletion = await openai.chat.completions.create({
-    //   model: "gpt-3.5-turbo",
-    //   messages,
-    //   temperature: 0.8,
-    // });
-    // res.json({ translation: chatCompletion.choices[0].message.content });
-    res.json({ translation: "Testing mode" });
+    const chatCompletion = await openai.chat.completions.create({
+      model: "gpt-3.5-turbo",
+      messages,
+      temperature: 0.8,
+    });
+    res.json({ translation: chatCompletion.choices[0].message.content });
+    // #### to test site functionaility without using openai credit comment out everything from the start of the try statement
+    // #### till this comment and uncomment the line below
+    // res.json({ translation: "Testing mode" });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
